@@ -1,0 +1,56 @@
+### GET account service returns http code 500 and error message
+POST http://localhost:30123/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u1234"
+  },
+  "response": {
+    "status": 500,
+    "body": "Internal server error",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "fixedDelayMilliseconds": 100
+  }
+}
+
+### GET account service delay and returns http code 500 and error message
+POST http://localhost:30123/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u1234"
+  },
+  "response": {
+    "status": 500,
+    "body": "Internal server error",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "fixedDelayMilliseconds": 2500
+  }
+}
+
+### GET account service returns http code 200 and balance
+POST http://localhost:30123/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u1234"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"customer\": { \"name\":  \"John Doe\" },  \"accountNumber\": \"LT121000011234567890\", \"name\": \"John's Tiny Payments Account\" }",
+    "fixedDelayMilliseconds": 100,
+    "headers": {
+        "Content-Type": "application/json"
+    }
+  }
+}

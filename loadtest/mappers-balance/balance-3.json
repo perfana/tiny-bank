@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=US12BOFA0000123456"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"amount\": 89000, \"currency\": \"USD\" }",
+    "fixedDelayMilliseconds": ${delay_balance},
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=NL91ABNA0417164300"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"amount\": -200, \"currency\": \"EUR\" }",
+    "fixedDelayMilliseconds": ${delay_balance},
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

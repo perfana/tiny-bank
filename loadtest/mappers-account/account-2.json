@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u5678"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"customer\": { \"name\":  \"Mary Jane\" },  \"accountNumber\": \"NL91ABNA0417164300\", \"name\": \"Mary's Tiny Savings Account\" }",
+    "fixedDelayMilliseconds": ${delay_account},
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

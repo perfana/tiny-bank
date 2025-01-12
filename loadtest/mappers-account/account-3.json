@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u9012"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"customer\": { \"name\":  \"Alice Coop\" },  \"accountNumber\": \"US12BOFA0000123456\", \"name\": \"Alice's Tiny Payments Account\" }",
+    "fixedDelayMilliseconds": ${delay_account},
+"headers": {
+"Content-Type": "application/json"
+}
+}
+}

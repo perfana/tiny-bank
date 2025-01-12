@@ -1,0 +1,53 @@
+receivers:
+  zipkin:
+    endpoint: localhost:9411
+  otlp:
+    protocols:
+      grpc:
+        endpoint: localhost:4317
+      http:
+        endpoint: localhost:4318
+  prometheus:
+    config:
+      scrape_configs:
+        - job_name: "tiny-bank"
+          scrape_interval: 5s
+          honor_labels: true
+          metrics_path: /actuator/prometheus
+          static_configs:
+            - targets: [ "localhost:18080" ]
+processors:
+  batch:
+  memory_limiter:
+    # 80% of maximum memory up to 2G
+    limit_mib: 1500
+    # 25% of limit up to 2G
+    spike_limit_mib: 512
+    check_interval: 5s
+  attributes:
+    actions:
+    - key: perfana-request-name
+      from_context: metadata.perfana-request-name
+      action: upsert
+    - key: perfana-test-run-id
+      from_context: metadata.perfana-test-run-id
+      action: upsert
+extensions:
+  zpages: {}
+exporters:
+  debug:
+    verbosity: detailed
+  prometheusremotewrite:
+      endpoint: "http://localhost:9090/api/v1/write"
+service:
+  telemetry:
+    logs:
+      level: "DEBUG"
+      development: true
+      encoding: "json"
+  extensions: [zpages]
+  pipelines:
+    metrics:
+      receivers: [otlp, prometheus]
+      processors: []
+      exporters: [debug, prometheusremotewrite]

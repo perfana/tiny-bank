@@ -1,0 +1,14 @@
+### POST slowness to balance service stub
+POST http://localhost:30124/__admin/settings
+Content-Type: application/json
+
+{
+  "fixedDelay": 2500
+}
+### POST no slowness to balance service stub
+POST http://localhost:30124/__admin/settings
+Content-Type: application/json
+
+{
+  "fixedDelay": -1
+}

@@ -1,0 +1,35 @@
+apiVersion: 1
+
+datasources:
+  - name: Mimir
+    type: prometheus
+    url: http://prometheus:9090
+    access: proxy
+    uid: mimir
+    editable: true
+    basicAuth: true
+    basicAuthUser: perfana
+    secureJsonData:
+      basicAuthPassword: admin_password
+  - name: influxDb-jfr
+    type: influxdb
+    url: http://influxdb:8086
+    access: proxy
+    uid: influxdb-jfr
+    editable: true
+    database: jfr
+    basicAuth: true
+    basicAuthUser: admin
+    secureJsonData:
+      basicAuthPassword: admin_password
+  - name: influxDb-k6
+    type: influxdb
+    url: http://influxdb:8086
+    access: proxy
+    uid: influxdb-k6
+    editable: true
+    database: k6
+    basicAuth: true
+    basicAuthUser: admin
+    secureJsonData:
+      basicAuthPassword: admin_password

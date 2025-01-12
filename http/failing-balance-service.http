@@ -1,0 +1,57 @@
+### GET balance service returns http code 500 and error message
+POST http://localhost:30124/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=LT121000011234567890"
+  },
+  "response": {
+    "status": 500,
+    "body": "Internal server error",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "fixedDelayMilliseconds": 100
+  }
+
+}
+
+### GET balance service delay and returns http code 500 and error message
+POST http://localhost:30124/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=LT121000011234567890"
+  },
+  "response": {
+    "status": 500,
+    "body": "Internal server error",
+    "headers": {
+      "Content-Type": "text/plain"
+    },
+    "fixedDelayMilliseconds": 2500
+  }
+}
+
+### GET balance service returns http code 200 and balance
+POST http://localhost:30124/__admin/mappings
+Content-Type: application/json
+
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=LT121000011234567890"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"amount\": 1000, \"currency\": \"EUR\" }",
+    "fixedDelayMilliseconds": 100,
+    "headers": {
+        "Content-Type": "application/json"
+    }
+  }
+}

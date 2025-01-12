@@ -1,0 +1,17 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/balance?accountNumber=LT121000011234567890"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"amount\": 1000, \"currency\": \"EUR\" }",
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "fixedDelayMilliseconds": ${delay_balance}
+  }
+}
+
+
+

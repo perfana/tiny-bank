@@ -1,0 +1,14 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/account?userId=u1234"
+  },
+  "response": {
+    "status": 200,
+    "body": "{ \"customer\": { \"name\":  \"John Doe\" },  \"accountNumber\": \"LT121000011234567890\", \"name\": \"John's Tiny Payments Account\" }",
+    "fixedDelayMilliseconds": ${delay_account},
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
