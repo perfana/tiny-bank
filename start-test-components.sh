@@ -21,7 +21,7 @@ echo "Waiting for database to start"
 sleep 3
 
 echo "Starting services"
-nohup java -javaagent:/Users/pp/alpha/git/jfr-exporter/target/jfr-exporter-LOCAL-SNAPSHOT.jar=influxUrl=http://localhost:8086,influxDatabase=jfr,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
+nohup java -javaagent:jfr-exporter.jar=influxUrl=http://localhost:8086,influxDatabase=jfr,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
                     -XX:NativeMemoryTracking=summary \
                     -Xmx1g -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar <&- >&- 2>&- &
 
