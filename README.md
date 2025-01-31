@@ -4,7 +4,9 @@ This is a simple bank application that is used to demonstrate resilience pattern
 
 ## Explore Tiny Bank
 
-To run the Tiny Bank application, follow these steps, which can also be run via the `start-test-components.sh` script:
+To run the Tiny Bank application, execute the `start-test-components.sh` script in the root directory of this project.
+
+The script will start the following components:
 
 1. Start the database and WireMock services:
     ```shell
@@ -113,8 +115,8 @@ needed to set up the x2i tool:
 
 The JFR exporter Java agent is used to send JFR data to InfluxDB. The following steps are needed to set up the JFR exporter:
 
-    wget https://github.com/perfana/jfr-exporter/releases/download/0.5.0/jfr-exporter-0.5.0.jar
-    mv jfr-exporter-0.5.0.jar jfr-exporter.jar
+    wget https://github.com/perfana/jfr-exporter/releases/download/0.5.0/jfr-exporter-0.5.0.jar -O jfr-exporter.jar
+    
 
 Add the Java JFR exporter agent to the JVM options of the Tiny Bank Spring Boot application:
 

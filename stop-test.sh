@@ -21,3 +21,13 @@ do
     echo "Port $port - No process"
   fi
 done
+
+cd db
+docker compose down
+cd - > /dev/null 2>&1
+
+if [[ " $@ " == *" --shutdown-metrics "* ]]; then
+  cd metrics
+  docker compose down
+  cd - > /dev/null 2>&1
+fi

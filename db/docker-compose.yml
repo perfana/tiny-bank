@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:latest
-    container_name: postgres-local
+    container_name: postgres-tiny-bank
     environment:
       POSTGRES_DB: tiny_bank_db
       POSTGRES_USER: pipo
