@@ -42,27 +42,24 @@ The Tiny Bank application is now running and can be accessed at `http://localhos
 
 ## Overview
 
-1. **Tiny Bank Spring Boot Application**  
-   The core of the system is a Spring Boot application. It serves as the main service responsible for managing banking
-   operations. Key features include:
-    - **Retrieving account information**: The application connects to two external WireMock services to fetch account
-      details and the current account balance for users.
-    - **Transaction management**: The application interacts with a PostgreSQL database to fetch transaction
-      information.
+1. **Tiny Bank Application**  
+   The core of the system is a Spring Boot service with a simple node HTML application on top with the following screens:
+    - **Account overview**: Calls two external services to 1) fetch account details and 2) the current account balance for users.
+    - **Transactions overview**: Get latest payment transactions for the user. The transactions are in a PostgreSQL database.
 
 2. **WireMock Services**  
-   Two WireMock servers are used to simulate external APIs:
-    - One provides **account information**, such as user details or account metadata.
-    - The other provides the **current account balance** for the respective accounts.
-      These services allow for controlled testing and can simulate different response scenarios, like delays or errors,
-      for resilience testing.
+   Two WireMock servers are used to simulate the remote services:
+    - One provides **account information**, such as user details and available accounts.
+    - The other provides the **current account balance** for given accounts.
+    
+   These Wiremock services can simulate delays or errors for resilience testing.
 
-3. **PostgreSQL Database**  
-   The database is designed to store information related to transactions. The Tiny Bank application uses this database
-   to get the most recent transaction or the transaction overview.
+3. **PostgreSQL database**  
+   The database contains transactions information. The Tiny Bank application uses this database
+   to get the most recent transaction for the transaction overview screen.
 
-4. **k6 Load Testing**
-    - **k6** is a performance testing tool used to simulate user load on the Tiny Bank application.
+4. **k6 load script**
+    - **k6** is used to generate simulated user load on the Tiny Bank application.
     - This helps test the resilience and scalability of the system under heavy traffic conditions.
     - Care is taken that it is an "open system" so that the arrival rate of requests stays constant when the responses slow down.
 
