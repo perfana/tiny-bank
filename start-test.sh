@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+./mvnw package -DskipTests
+
 if [ ! -f scheduler/target/auto-resilience-test-1.0-SNAPSHOT.jar ]; then
   echo "Error: scheduler/target/auto-resilience-test-1.0-SNAPSHOT.jar is not found. Please build the project and try again."
   exit 1
@@ -20,8 +22,8 @@ if [ -z "$INFLUX_URL" ]; then
   echo "Environment variable INFLUX_URL is not set. Using default."
 fi
 
-if [ -z "$INFLUX_DB" ]; then
-  echo "Environment variable INFLUX_DB is not set. Using default."
+if [ -z "$INFLUX_DB_K6" ]; then
+  echo "Environment variable INFLUX_DB_K6 is not set. Using default."
 fi
 
 if [ -z "$INFLUX_USER" ]; then

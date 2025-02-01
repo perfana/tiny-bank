@@ -66,8 +66,8 @@ cd - > $OUT 2>$ERR
 
 echo "Starting services"
 INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
-INFLUX_DB=${INFLUX_DB:-jfr}
-nohup java -javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
+INFLUX_DB_JFR=${INFLUX_DB_JFR:-jfr}
+nohup java -javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
                     -XX:NativeMemoryTracking=summary \
                     -Xmx1g -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar > $OUT 2>$ERR &
 

@@ -33,7 +33,7 @@ public class TestScheduler {
         final String perfanaApiKey = System.getenv("PERFANA_API_KEY");
         final String perfanaUrl = getEnvOrDefault("PERFANA_URL", "http://localhost:4000");
         final String influxUrl = getEnvOrDefault("INFLUX_URL", "http://localhost:8086");
-        final String influxDb = getEnvOrDefault("INFLUX_DB", "k6");
+        final String influxDb = getEnvOrDefault("INFLUX_DB_K6", "k6");
         final String influxDbUsername = getEnvOrDefault("INFLUX_USER", "admin");
         final String influxDbPassword = getEnvOrDefault("INFLUX_PASSWORD", "admin");
 
@@ -157,8 +157,8 @@ public class TestScheduler {
         }
     }
 
-    private static String getEnvOrDefault(String url, String defaultUrl) {
-        return System.getenv(url) != null ? System.getenv(url) : defaultUrl;
+    private static String getEnvOrDefault(String envVar, String defaultValue) {
+        return System.getenv(envVar) != null ? System.getenv(envVar) : defaultValue;
     }
 
     private static void registerShutdownHook(EventScheduler scheduler, CountDownLatch abortLatch) {
