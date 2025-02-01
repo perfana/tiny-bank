@@ -16,22 +16,38 @@ fi
 
 if [ -z "$PERFANA_URL" ] && [ "$PERFANA_API_KEY" != "" ]; then
   echo "Environment variable PERFANA_URL is not set. Using default."
+else
+  echo "PERFANA_API_KEY is set, using Perfana URL: $PERFANA_URL"
 fi
 
 if [ -z "$INFLUX_URL" ]; then
   echo "Environment variable INFLUX_URL is not set. Using default."
+else
+  echo "Influx URL: $INFLUX_URL"
 fi
 
 if [ -z "$INFLUX_DB_K6" ]; then
   echo "Environment variable INFLUX_DB_K6 is not set. Using default."
+else
+  echo "Influx DB K6: $INFLUX_DB_K6"
+fi
+
+if [ -z "$INFLUX_DB_JFR" ]; then
+  echo "Environment variable INFLUX_DB_JFR is not set. Using default."
+else
+  echo "Influx DB K6: $INFLUX_DB_JFR"
 fi
 
 if [ -z "$INFLUX_USER" ]; then
   echo "Environment variable INFLUX_USER is not set. Using default."
+else
+  echo "Influx User: $INFLUX_USER"
 fi
 
 if [ -z "$INFLUX_PASSWORD" ]; then
   echo "Environment variable INFLUX_PASSWORD is not set. Using default."
+else
+  echo "Influx Password: ***"
 fi
 
 read -p "Press Enter to start the load test scheduler... (or press Ctrl+C to cancel)"
