@@ -79,3 +79,20 @@ echo "Open the tiny-bank app at http://localhost:13000 and use the given user id
 echo "Open the Grafana at http://localhost:3000 and login with admin/admin"
 
 sleep 6
+
+declare services=(
+  [18080]="tiny-bank-service"
+  [13000]="tiny-fe"
+  [3000]="Grafana"
+  [30123]="Account stub"
+  [30124]="Balance stub"
+)
+
+for port in "${!services[@]}"; do
+  if ! nc -z localhost "$port"; then
+    echo "Error: ${services[$port]} is not running. Please check the logs and try again."
+    exit 1
+  fi
+done
+
+echo "All services are up and running."
