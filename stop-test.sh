@@ -2,8 +2,8 @@
 
 for port in {30123,30124,18080,13000};
 do
-  # Get the process IDs for the port (could be multiple PIDs)
-  pids=$(lsof -t -i:$port)
+  # Get the process IDs listening on port
+  pids=$(lsof -t -i:$port -sTCP:LISTEN)
 
   if [ -n "$pids" ]; then
     echo "Port $port - Found PIDs: $(echo $pids | tr '\n' ' ')"
