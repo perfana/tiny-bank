@@ -38,3 +38,4 @@ x2i
 jfr-exporter.jar
 test_results.csv
 *.log
+scheduler/dependency-reduced-pom.xml

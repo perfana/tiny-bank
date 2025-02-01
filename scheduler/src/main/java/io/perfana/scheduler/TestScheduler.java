@@ -30,9 +30,13 @@ public class TestScheduler {
         final int totalRunTimeInSeconds = rampupTimeInSeconds + constantLoadTimeInSeconds;
         final int totalSleepSecondsPlusSlack = totalRunTimeInSeconds + 120;
 
-        final String influxUrl = "http://localhost:8086";
-        final String influxDbUsername = "admin";
-        final String influxDbPassword = "admin_password";
+        final String perfanaApiKey = System.getenv("PERFANA_API_KEY");
+        final String perfanaUrl = getEnvOrDefault("PERFANA_URL", "http://localhost:4000");
+        final String influxUrl = getEnvOrDefault("INFLUX_URL", "http://localhost:8086");
+        final String influxDb = getEnvOrDefault("INFLUX_DB", "k6");
+        final String influxDbUsername = getEnvOrDefault("INFLUX_USER", "admin");
+        final String influxDbPassword = getEnvOrDefault("INFLUX_PASSWORD", "admin");
+
         final String testEnvironment = "silver";
         final String workload = "load-resilience";
         final String systemUnderTest = "tiny-bank";
@@ -54,15 +58,14 @@ public class TestScheduler {
         List<EventConfig> eventConfigs = new ArrayList<>();
 
         {
-            String apiKey = System.getenv("PERFANA_API_KEY");
-            if (apiKey == null) {
+            if (perfanaApiKey == null) {
                 System.err.println("PERFANA_API_KEY environment variable not set, skipping Perfana event.");
             }
             else {
                 PerfanaEventConfig perfanaEventConfig = new PerfanaEventConfig();
                 perfanaEventConfig.setName("perfana-event");
-                perfanaEventConfig.setApiKey(apiKey);
-                perfanaEventConfig.setPerfanaUrl("http://localhost:4000");
+                perfanaEventConfig.setApiKey(perfanaApiKey);
+                perfanaEventConfig.setPerfanaUrl(perfanaUrl);
                 eventConfigs.add(perfanaEventConfig);
             }
         }
@@ -79,7 +82,7 @@ public class TestScheduler {
         {
             CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
             commandConfig.setName("command-runner-k6-to-influx");
-            commandConfig.setOnStartTest("./x2i . -i k6 -u " + influxDbUsername + " -p " + influxDbPassword + " -a " + influxUrl + " -b k6 -t " + testEnvironment + " -y " + systemUnderTest + " -s " + totalSleepSecondsPlusSlack);
+            commandConfig.setOnStartTest("./x2i . -i k6 -u " + influxDbUsername + " -p " + influxDbPassword + " -a " + influxUrl + " -b " + influxDb + " -t " + testEnvironment + " -y " + systemUnderTest + " -s " + totalSleepSecondsPlusSlack);
             eventConfigs.add(commandConfig);
         }
 
@@ -152,6 +155,10 @@ public class TestScheduler {
             Thread.currentThread().interrupt();
             println("Interrupted while waiting for abort to finish");
         }
+    }
+
+    private static String getEnvOrDefault(String url, String defaultUrl) {
+        return System.getenv(url) != null ? System.getenv(url) : defaultUrl;
     }
 
     private static void registerShutdownHook(EventScheduler scheduler, CountDownLatch abortLatch) {

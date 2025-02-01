@@ -65,7 +65,9 @@ docker compose up -d || { echo "Error: Failed to start Grafana using Docker Comp
 cd - > $OUT 2>$ERR
 
 echo "Starting services"
-nohup java -javaagent:jfr-exporter.jar=influxUrl=http://localhost:8086,influxDatabase=jfr,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
+INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
+INFLUX_DB=${INFLUX_DB:-jfr}
+nohup java -javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
                     -XX:NativeMemoryTracking=summary \
                     -Xmx1g -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar > $OUT 2>$ERR &
 

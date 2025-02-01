@@ -113,7 +113,6 @@ needed to set up the x2i tool:
 The JFR exporter Java agent is used to send JFR data to InfluxDB. The following steps are needed to set up the JFR exporter:
 
     wget https://github.com/perfana/jfr-exporter/releases/download/0.5.0/jfr-exporter-0.5.0.jar -O jfr-exporter.jar
-    
 
 Add the Java JFR exporter agent to the JVM options of the Tiny Bank Spring Boot application:
 

@@ -22,6 +22,9 @@ do
   fi
 done
 
+echo "check for hanging tiny-bank-services"
+ps aux | grep "tiny-bank-service-0.0.1-SNAPSHOT.ja[r]" | awk '{print $2}' | xargs -I {} kill -9 {}
+
 cd db
 docker compose down
 cd - > /dev/null 2>&1
