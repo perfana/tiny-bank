@@ -1,10 +1,11 @@
 # Tiny Bank
 
-This is a simple bank application that is used to demonstrate resilience patterns and performance testing.
+This is a simple bank application that is used to demonstrate resilience and performance testing.
 
 ## Explore Tiny Bank
 
-To run the Tiny Bank application, execute the `start-test-components.sh` script in the root directory of this project.
+To run the Tiny Bank application, execute the `start-test-components.sh` script in the root directory 
+of this project.
 
 The script will start the following components:
 

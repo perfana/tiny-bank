@@ -36,6 +36,7 @@ build/
 
 x2i
 jfr-exporter.jar
+opentelemetry-javaagent.jar
 test_results.csv
 *.log
 scheduler/dependency-reduced-pom.xml

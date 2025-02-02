@@ -22,13 +22,15 @@ do
   fi
 done
 
-echo "check for hanging tiny-bank-services"
+echo "Check for hanging tiny-bank-services (in case Java process is running but not listening on a port)"
 ps aux | grep "tiny-bank-service-0.0.1-SNAPSHOT.ja[r]" | awk '{print $2}' | xargs -I {} kill -9 {}
 
+# Stop the database
 cd db
 docker compose down
 cd - > /dev/null 2>&1
 
+# Check if --shutdown-metrics flag is present: stop the metrics components
 if [[ " $@ " == *" --shutdown-metrics "* ]]; then
   cd metrics
   docker compose down

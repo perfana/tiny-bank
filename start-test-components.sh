@@ -1,14 +1,22 @@
 #!/bin/bash
 
+check_flag() {
+  local flag="$1"
+  shift
+  for arg in "$@"; do
+    if [ "$arg" = "$flag" ]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
 DEBUG=false
 
 # Check if --debug flag is provided
-for arg in "$@"; do
-  if [ "$arg" == "--debug" ]; then
-    DEBUG=true
-    break
-  fi
-done
+if check_flag "--debug" "$@"; then
+  DEBUG=true
+fi
 
 # Set up output redirection based on the --debug flag
 if [ "$DEBUG" = true ]; then
@@ -37,11 +45,14 @@ if ! command -v java > /dev/null 2>&1; then
   exit 1
 fi
 
-# Check if x2i and jfr-exporter.jar are available
-if [ ! -f x2i ] || [ ! -f jfr-exporter.jar ]; then
-  echo "Downloading x2i or jfr-exporter.jar."
+# Check if x2i, jfr-exporter.jar and opentelemetry-agent.jar are available
+if [ ! -f x2i ] || [ ! -f jfr-exporter.jar ] || [ ! -f opentelemetry-javaagent.jar ]; then
+  echo "Downloading x2i, jfr-exporter.jar and opentelemetry-agent.jar."
   download-components.sh
 fi
+
+echo "Stopping any running components"
+./stop-test.sh
 
 echo "Building app"
 ./mvnw package -DskipTests > $OUT 2>$ERR
@@ -65,11 +76,25 @@ docker compose up -d || { echo "Error: Failed to start Grafana using Docker Comp
 cd - > $OUT 2>$ERR
 
 echo "Starting services"
-INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
-INFLUX_DB_JFR=${INFLUX_DB_JFR:-jfr}
-nohup java -javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=service/tiny-bank-service,tag=systemUnderTest/tiny-bank,tag=testEnvironment/silver \
-                    -XX:NativeMemoryTracking=summary \
-                    -Xmx1g -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar > $OUT 2>$ERR &
+
+if check_flag " --jfr-agent" "$@"; then
+  INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
+  INFLUX_DB_JFR=${INFLUX_DB_JFR:-jfr}
+  JFR_EXPORTER="-javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=systemUnderTest/tiny-bank,tag=service/tiny-bank-service,tag=testEnvironment/silver -XX:NativeMemoryTracking=summary"
+else
+  JFR_EXPORTER=""
+fi
+
+if check_flag "--otel-agent" "$@"; then
+  OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
+  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar -Dotel.resource.attributes=service.name=tiny-bank-service"
+else
+  OTEL_AGENT=""
+fi
+
+JAVA_OPTIONS="-Xmx512m"
+
+java $JFR_EXPORTER $OTEL_AGENT $JAVA_OPTIONS -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar >tiny-bank-service.log 2>tiny-bank-service.log &
 
 echo "Starting tiny-fe"
 cd app/tiny-fe

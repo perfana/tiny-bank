@@ -75,7 +75,7 @@ public class TestScheduler {
             commandConfig.setName("command-runner-wait-for-start");
             // wait for script to finish before starting the test
             commandConfig.setReadyForStartParticipant(true);
-            commandConfig.setOnBeforeTest("./start-test-components.sh");
+            commandConfig.setOnBeforeTest("./start-test-components.sh --jfr-agent");
             eventConfigs.add(commandConfig);
         }
 
