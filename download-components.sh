@@ -40,16 +40,12 @@ else
   exit 1
 fi
 
-# https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar
-
-
-
-NEW_JAR_URL="https://example.com/path-to-your-new-jar-file.jar"
-echo "Downloading new jar file from $NEW_JAR_URL"
-if wget -q $NEW_JAR_URL -O new-jar-file.jar; then
-  echo "Successfully downloaded new jar file."
+OTEL_AGENT_URL="https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar"
+echo "Downloading opentelemetry-javaagent.jar from $OTEL_AGENT_URL"
+if wget -q $OTEL_AGENT_URL -O opentelemetry-javaagent.jar; then
+  echo "Successfully downloaded opentelemetry-javaagent.jar."
 else
-  echo "Failed to download new jar file."
+  echo "Failed to download opentelemetry-javaagent.jar."
   exit 1
 fi
 

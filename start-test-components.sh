@@ -48,7 +48,7 @@ fi
 # Check if x2i, jfr-exporter.jar and opentelemetry-agent.jar are available
 if [ ! -f x2i ] || [ ! -f jfr-exporter.jar ] || [ ! -f opentelemetry-javaagent.jar ]; then
   echo "Downloading x2i, jfr-exporter.jar and opentelemetry-agent.jar."
-  download-components.sh
+  ./download-components.sh
 fi
 
 echo "Stopping any running components"
