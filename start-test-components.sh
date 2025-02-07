@@ -51,6 +51,15 @@ if [ ! -f x2i ] || [ ! -f jfr-exporter.jar ] || [ ! -f opentelemetry-javaagent.j
   ./download-components.sh
 fi
 
+# Check if java version is 17+
+JAVA_VERSION=$(java -version 2>&1 | awk -F '"' '/version/ {print $2}' | cut -d'.' -f1)
+if [[ "$JAVA_VERSION" -lt 17 ]]; then
+  echo "Error: Java version 17+ is required, found: $JAVA_VERSION. Please install Java 17+ and try again."
+  exit 1
+else
+  echo "Java version: $JAVA_VERSION"
+fi
+
 echo "Stopping any running components"
 ./stop-test.sh
 
