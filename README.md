@@ -153,3 +153,7 @@ Beware that `--volumes` will remove the volumes, so data will be lost. The Tiny 
 when restarting the Spring Boot application.
 
 Stop all components by running the `stop-test.sh` script in the root directory of this project.
+
+## Credits
+
+<a target="_blank" href="https://icons8.com/icon/21709/bank-euro">bank-euro</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>

@@ -29,6 +29,9 @@ app.post('/submit', (req, res, next) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link type="image/png" sizes="16x16" rel="icon" href="favicon.png">
+    
     <title>Loading...</title>
     <style>
         body {
@@ -313,6 +316,7 @@ app.post('/transactions', (req, res, next) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="image/png" sizes="16x16" rel="icon" href="favicon.png">
     <title>Loading...</title>
     <style>
         body {
@@ -394,6 +398,7 @@ app.get('/fetchTransactions', (req, res, next) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="image/png" sizes="16x16" rel="icon" href="favicon.png">
     <title>Transaction Information</title>
     <style>
         body {
@@ -553,6 +558,7 @@ app.get('/fetchTransactions', (req, res, next) => {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link type="image/png" sizes="16x16" rel="icon" href="favicon.png">
     <title>Error</title>
     <style>
         body {
