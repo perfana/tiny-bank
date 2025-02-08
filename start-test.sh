@@ -9,6 +9,9 @@ fi
 
 echo "Starting test"
 
+# note: the following environment variables are used in the test Scheduler
+# here: src/main/java/io/perfana/scheduler/TestScheduler.java
+
 # check if PERFANA_API_KEY environment variable is set, otherwise report skipping Perfana events.
 if [ -z "$PERFANA_API_KEY" ]; then
   echo "Environment variable PERFANA_API_KEY is not set. Skipping Perfana events."
@@ -50,6 +53,18 @@ else
   echo "Influx Password: ***"
 fi
 
+if [ -z "$JFR_AGENT" ]; then
+  echo "Environment variable JFR_AGENT is not set. Using default."
+else
+  echo "JFR Agent: $JFR_AGENT"
+fi
+
+if [ -z "$OTEL_AGENT" ]; then
+  echo "Environment variable OTEL_AGENT is not set. Using default."
+else
+  echo "OTEL Agent: $OTEL_AGENT"
+fi
+
 read -p "Press Enter to start the load test scheduler... (or press Ctrl+C to cancel)"
 
-java -jar scheduler/target/auto-resilience-test-1.0-SNAPSHOT.jar
+java -jar scheduler/target/auto-resilience-test-1.0-SNAPSHOT.jar "$@"

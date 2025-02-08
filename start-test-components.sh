@@ -89,13 +89,13 @@ echo "Starting services"
 if check_flag " --jfr-agent" "$@"; then
   INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
   INFLUX_DB_JFR=${INFLUX_DB_JFR:-jfr}
-  JFR_EXPORTER="-javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=systemUnderTest/tiny-bank,tag=service/tiny-bank-service,tag=testEnvironment/silver -XX:NativeMemoryTracking=summary"
+  JFR_AGENT="-javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=systemUnderTest/tiny-bank,tag=service/tiny-bank-service,tag=testEnvironment/silver -XX:NativeMemoryTracking=summary"
 else
-  JFR_EXPORTER=""
+  JFR_AGENT=""
 fi
 
 if check_flag "--otel-agent" "$@"; then
-  OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
+  # for debug: OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
   OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar -Dotel.resource.attributes=service.name=tiny-bank-service"
 else
   OTEL_AGENT=""
@@ -103,7 +103,7 @@ fi
 
 JAVA_OPTIONS="-Xmx512m"
 
-java $JFR_EXPORTER $OTEL_AGENT $JAVA_OPTIONS -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar >tiny-bank-service.log 2>tiny-bank-service.log &
+java $JFR_AGENT $OTEL_AGENT $JAVA_OPTIONS -jar service/target/tiny-bank-service-0.0.1-SNAPSHOT.jar >tiny-bank-service.log 2>tiny-bank-service.log &
 
 echo "Starting tiny-fe"
 cd app/tiny-fe

@@ -14,6 +14,7 @@ import io.perfana.eventscheduler.log.EventLoggerStdOut;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -36,12 +37,19 @@ public class TestScheduler {
         final String influxDb = getEnvOrDefault("INFLUX_DB_K6", "k6");
         final String influxDbUsername = getEnvOrDefault("INFLUX_USER", "admin");
         final String influxDbPassword = getEnvOrDefault("INFLUX_PASSWORD", "admin");
+        final boolean enableJfrAgent = getEnvOrDefault("ENABLE_JFR_AGENT", "false").equalsIgnoreCase("true");
+        final boolean enableOtelAgent = getEnvOrDefault("ENABLE_OTEL_AGENT", "false").equalsIgnoreCase("true");
 
         final String testEnvironment = "silver";
         final String workload = "load-resilience";
         final String systemUnderTest = "tiny-bank";
 
-        final List<String> tags = List.of("jfr", "k6", "spring-boot-kubernetes");
+        final List<String> tagsBuilder = new ArrayList<String>();
+        if (enableJfrAgent) tagsBuilder.add("jfr");
+        if (enableOtelAgent) tagsBuilder.add("otel");
+        tagsBuilder.add("k6");
+        tagsBuilder.add("spring-boot-kubernetes");
+        final List<String> tags = Collections.unmodifiableList(tagsBuilder);
 
         TestConfig testConfig = TestConfig.builder()
                 .workload(workload)
@@ -71,11 +79,15 @@ public class TestScheduler {
         }
 
         {
+            List<String> arguments = new ArrayList<>();
+            if (enableJfrAgent) arguments.add("--jfr-agent");
+            if (enableOtelAgent) arguments.add("--otel-agent");
+
             CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
             commandConfig.setName("command-runner-wait-for-start");
             // wait for script to finish before starting the test
             commandConfig.setReadyForStartParticipant(true);
-            commandConfig.setOnBeforeTest("./start-test-components.sh --jfr-agent");
+            commandConfig.setOnBeforeTest("./start-test-components.sh " + String.join(" ", arguments));
             eventConfigs.add(commandConfig);
         }
 
