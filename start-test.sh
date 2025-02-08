@@ -53,16 +53,16 @@ else
   echo "Influx Password: ***"
 fi
 
-if [ -z "$JFR_AGENT" ]; then
-  echo "Environment variable JFR_AGENT is not set. Using default."
+if [ -z "$ENABLE_JFR_AGENT" ]; then
+  echo "Environment variable ENABLE_JFR_AGENT is not set. Using default."
 else
-  echo "JFR Agent: $JFR_AGENT"
+  echo "JFR Agent enabled: $ENABLE_JFR_AGENT"
 fi
 
-if [ -z "$OTEL_AGENT" ]; then
-  echo "Environment variable OTEL_AGENT is not set. Using default."
+if [ -z "$ENABLE_OTEL_AGENT" ]; then
+  echo "Environment variable ENABLE_OTEL_AGENT is not set. Using default."
 else
-  echo "OTEL Agent: $OTEL_AGENT"
+  echo "OTEL Agent enabled: $ENABLE_OTEL_AGENT"
 fi
 
 read -p "Press Enter to start the load test scheduler... (or press Ctrl+C to cancel)"

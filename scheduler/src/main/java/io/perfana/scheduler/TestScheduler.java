@@ -44,7 +44,7 @@ public class TestScheduler {
         final String workload = "load-resilience";
         final String systemUnderTest = "tiny-bank";
 
-        final List<String> tagsBuilder = new ArrayList<String>();
+        final List<String> tagsBuilder = new ArrayList<>();
         if (enableJfrAgent) tagsBuilder.add("jfr");
         if (enableOtelAgent) tagsBuilder.add("otel");
         tagsBuilder.add("k6");
