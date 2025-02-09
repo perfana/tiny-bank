@@ -76,6 +76,9 @@ cd db
 docker compose up -d || { echo "Error: Failed to start database using Docker Compose."; exit 1; }
 cd - > $OUT 2>$ERR
 
+echo "Init toxiproxy"
+docker exec toxiproxy /go/bin/toxiproxy-cli create -l 0.0.0.0:15432 -u postgres-tiny-bank:5432 test-postgres
+
 echo "Waiting for database to start"
 sleep 3
 
@@ -95,8 +98,9 @@ else
 fi
 
 if check_flag "--otel-agent" "$@"; then
-  # for debug: OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
-  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar -Dotel.resource.attributes=service.name=tiny-bank-service"
+  # for debug:
+  # OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
+  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $OTEL_TO_CONSOLE -Dotel.resource.attributes=service.name=tiny-bank-service -Dotel.metric.export.interval=5000"
 else
   OTEL_AGENT=""
 fi

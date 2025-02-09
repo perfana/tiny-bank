@@ -65,6 +65,12 @@ else
   echo "OTEL Agent enabled: $ENABLE_OTEL_AGENT"
 fi
 
+if [ -z "$IS_SLOW_DB_TEST" ]; then
+  echo "Environment variable IS_SLOW_DB_TEST is not set. Using default."
+else
+  echo "Slow DB test enabled: $IS_SLOW_DB_TEST"
+fi
+
 read -p "Press Enter to start the load test scheduler... (or press Ctrl+C to cancel)"
 
 java -jar scheduler/target/auto-resilience-test-1.0-SNAPSHOT.jar "$@"

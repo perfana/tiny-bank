@@ -11,5 +11,12 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
+  toxiproxy:
+    image: shopify/toxiproxy
+    container_name: toxiproxy
+    ports:
+      - "8474:8474"
+      - "15432:15432"
+
 volumes:
   postgres-data:

@@ -39,6 +39,7 @@ public class TestScheduler {
         final String influxDbPassword = getEnvOrDefault("INFLUX_PASSWORD", "admin");
         final boolean enableJfrAgent = getEnvOrDefault("ENABLE_JFR_AGENT", "false").equalsIgnoreCase("true");
         final boolean enableOtelAgent = getEnvOrDefault("ENABLE_OTEL_AGENT", "false").equalsIgnoreCase("true");
+        final boolean isSlowDatabaseActive = getEnvOrDefault("IS_SLOW_DB_TEST", "false").equalsIgnoreCase("true");
 
         final String testEnvironment = "silver";
         final String workload = "load-resilience";
@@ -121,7 +122,7 @@ public class TestScheduler {
             eventConfigs.add(wiremockBalance);
         }
 
-        String scheduleScript =
+        String scheduleScriptSlowRemoteServices =
                 """
                     PT2S|wiremock-change-mappings(no-0ms)|delay_account=0;delay_balance=0
                     PT30S|wiremock-change-mappings(short-100ms)|delay_account=100;delay_balance=100
@@ -130,6 +131,26 @@ public class TestScheduler {
                     PT180S|wiremock-change-mappings(balance-really-slow-2s)|delay_account=500;delay_balance=2000
                     PT220S|wiremock-change-mappings(short-delay-100ms)|delay_account=100;delay_balance=100
                 """;
+
+        String scheduleScriptSlowDatabase =
+                """
+                    PT30S|run-command(short-db-200ms)|name=toxiproxy;latency_ms=200
+                    PT90S|run-command(slow-db-500ms)|name=toxiproxy;latency_ms=500
+                    PT180S|run-command(slow-db-800ms)|name=toxiproxy;latency_ms=800
+                    PT220S|run-command(slow-db-1400ms)|name=toxiproxy;latency_ms=1400
+                    PT240S|run-command(slow-db-2000ms)|name=toxiproxy;latency_ms=2000
+                    PT280S|run-command(fast-db-10ms)|name=toxiproxy;latency_ms=10
+                """;
+
+        {
+            CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
+            commandConfig.setName("toxiproxy");
+            commandConfig.setOnStartTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic add -n myLatency -t latency -a latency=0 test-postgres");
+            commandConfig.setOnScheduledEvent("docker exec toxiproxy /go/bin/toxiproxy-cli toxic update -n myLatency -a latency=__latency_ms__ test-postgres");
+            commandConfig.setOnAfterTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic remove -n myLatency test-postgres");
+            eventConfigs.add(commandConfig);
+        }
+
         {
             CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
             commandConfig.setName("command-runner-stop-processes");
@@ -141,7 +162,7 @@ public class TestScheduler {
         EventSchedulerConfig eventSchedulerConfig = EventSchedulerConfig.builder()
                 .testConfig(testConfig)
                 .eventConfigs(eventConfigs)
-                .scheduleScript(scheduleScript)
+                .scheduleScript(isSlowDatabaseActive ? scheduleScriptSlowDatabase : scheduleScriptSlowRemoteServices)
                 .build();
 
         EventScheduler scheduler = EventSchedulerBuilder.of(eventSchedulerConfig, eventLogger);
