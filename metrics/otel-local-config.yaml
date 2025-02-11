@@ -8,6 +8,20 @@ receivers:
       http:
         endpoint: 0.0.0.0:4318
 processors:
+  attributes:
+    actions:
+      - key: "system_under_test"
+        action: insert
+        value: "tiny-bank"
+        #from_context: metadata.system_under_test
+      - key: "test_environment"
+        action: insert
+        value: "silver"
+        #from_context: metadata.test_environment
+      - key: "service"
+        action: insert
+        value: "tiny-bank-service"
+        #from_context: metadata.service
   batch:
 extensions:
   zpages: {}
@@ -26,13 +40,13 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: []
+      processors: [attributes]
       exporters: [debug, prometheusremotewrite]
     logs:
       receivers: [otlp]
-      processors: []
+      processors: [attributes]
       exporters: [debug]
     traces:
       receivers: [otlp, zipkin]
-      processors: []
+      processors: [attributes]
       exporters: [debug]

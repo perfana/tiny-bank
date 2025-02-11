@@ -100,7 +100,8 @@ fi
 if check_flag "--otel-agent" "$@"; then
   # for debug:
   # OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
-  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $OTEL_TO_CONSOLE -Dotel.resource.attributes=service.name=tiny-bank-service -Dotel.metric.export.interval=5000"
+  RESOURCE_ATTRIBUTES="-Dotel.resource.attributes=service.name=tiny-bank-service,system_under_test=tiny-bank,test_environment=silver,service=tiny-bank-service"
+  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $OTEL_TO_CONSOLE $RESOURCE_ATTRIBUTES -Dotel.metric.export.interval=5000"
 else
   OTEL_AGENT=""
 fi
