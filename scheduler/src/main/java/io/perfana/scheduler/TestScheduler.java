@@ -102,7 +102,7 @@ public class TestScheduler {
         {
             CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
             commandConfig.setName("command-runner-k6");
-            commandConfig.setOnStartTest("export DURATION=" + totalRunTimeInSeconds + "s; k6 run --quiet --out csv=test_results.csv loadtest/k6_load_test.js");
+            commandConfig.setOnStartTest("export TEST_RUN_ID=__testRunId__; export DURATION=" + totalRunTimeInSeconds + "s; k6 run --quiet --out csv=test_results.csv loadtest/k6_load_test.js");
             eventConfigs.add(commandConfig);
         }
 
