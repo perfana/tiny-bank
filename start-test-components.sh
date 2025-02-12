@@ -101,7 +101,10 @@ if check_flag "--otel-agent" "$@"; then
   # for debug:
   # OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
   RESOURCE_ATTRIBUTES="-Dotel.resource.attributes=service.name=tiny-bank-service,system_under_test=tiny-bank,test_environment=silver,service=tiny-bank-service"
-  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $OTEL_TO_CONSOLE $RESOURCE_ATTRIBUTES -Dotel.metric.export.interval=5000"
+  # workaround for the resource attributes not being exported via the otel collector attributes processor
+  OTLP_HEADERS="-Dotel.exporter.otlp.headers=system_under_test=tiny-bank,test_environment=silver,service=tiny-bank-service"
+  #ENABLE_MICROMETER="-Dotel.instrumentation.micrometer.enabled=true"
+  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $ENABLE_MICROMETER $OTEL_TO_CONSOLE $RESOURCE_ATTRIBUTES $OTLP_HEADERS -Dotel.metric.export.interval=5000"
 else
   OTEL_AGENT=""
 fi

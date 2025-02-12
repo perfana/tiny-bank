@@ -12,16 +12,19 @@ processors:
     actions:
       - key: "system_under_test"
         action: insert
-        value: "tiny-bank"
-        #from_context: metadata.system_under_test
+        from_context: "metadata.system_under_test"
+        #value: "tiny-bank"
+        #from_attribute: system_under_test
       - key: "test_environment"
         action: insert
-        value: "silver"
-        #from_context: metadata.test_environment
+        from_context: "metadata.test_environment"
+        #value: "silver"
+        #from_attribute: "test_environment"
       - key: "service"
         action: insert
-        value: "tiny-bank-service"
-        #from_context: metadata.service
+        from_context: "metadata.service"
+        #value: "tiny-bank-service"
+        #from_attribute: service
   batch:
 extensions:
   zpages: {}
@@ -44,9 +47,9 @@ service:
       exporters: [debug, prometheusremotewrite]
     logs:
       receivers: [otlp]
-      processors: [attributes]
+      processors: []
       exporters: [debug]
     traces:
       receivers: [otlp, zipkin]
-      processors: [attributes]
+      processors: []
       exporters: [debug]
