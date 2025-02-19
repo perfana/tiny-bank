@@ -98,13 +98,27 @@ else
 fi
 
 if check_flag "--otel-agent" "$@"; then
-  # for debug:
+  # for debug to console only
   # OTEL_TO_CONSOLE="-Dotel.metrics.exporter=console -Dotel.traces.exporter=console -Dotel.logs.exporter=console"
+
+  # these do not seem to get passed along to the otel collector
   RESOURCE_ATTRIBUTES="-Dotel.resource.attributes=service.name=tiny-bank-service,system_under_test=tiny-bank,test_environment=silver,service=tiny-bank-service"
-  # workaround for the resource attributes not being exported via the otel collector attributes processor
+
+  # workaround for the resource attributes not being exported via the otel collector attributes processor, needs "include_metadata: true"
   OTLP_HEADERS="-Dotel.exporter.otlp.headers=system_under_test=tiny-bank,test_environment=silver,service=tiny-bank-service"
+
+  # do not sent complete process information
+  DISABLE_PROCESS_RESOURCE_PROVIDER="-Dotel.java.disabled.resource.providers=io.opentelemetry.instrumentation.resources.ProcessResourceProvider"
+
+  DISABLE_TRACES="-Dotel.traces.exporter=none"
+  DISABLE_LOGS="-Dotel.logs.exporter=none"
+
   #ENABLE_MICROMETER="-Dotel.instrumentation.micrometer.enabled=true"
-  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $ENABLE_MICROMETER $OTEL_TO_CONSOLE $RESOURCE_ATTRIBUTES $OTLP_HEADERS -Dotel.metric.export.interval=5000"
+
+  EXPORT_INTERVAL="-Dotel.metric.export.interval=5000"
+
+  OTEL_AGENT="-javaagent:opentelemetry-javaagent.jar $ENABLE_MICROMETER $DISABLE_TRACES $DISABLE_LOGS $OTEL_TO_CONSOLE $RESOURCE_ATTRIBUTES $OTLP_HEADERS $DISABLE_PROCESS_RESOURCE_PROVIDER $EXPORT_INTERVAL"
+
 else
   OTEL_AGENT=""
 fi
