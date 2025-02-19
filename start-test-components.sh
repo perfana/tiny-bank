@@ -89,7 +89,7 @@ cd - > $OUT 2>$ERR
 
 echo "Starting services"
 
-if check_flag " --jfr-agent" "$@"; then
+if check_flag "--jfr-agent" "$@"; then
   INFLUX_URL=${INFLUX_URL:-http://localhost:8086}
   INFLUX_DB_JFR=${INFLUX_DB_JFR:-jfr}
   JFR_AGENT="-javaagent:jfr-exporter.jar=influxUrl=$INFLUX_URL,influxDatabase=$INFLUX_DB_JFR,tag=systemUnderTest/tiny-bank,tag=service/tiny-bank-service,tag=testEnvironment/silver -XX:NativeMemoryTracking=summary"
