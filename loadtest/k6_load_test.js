@@ -10,6 +10,7 @@ const userIDs = new SharedArray('user_ids', function () {
 // Read duration from environment variable, default to 30s if not provided
 const duration = __ENV.DURATION || '30s';
 const port = __ENV.SUT_PORT || 18080;
+const testRunId = __ENV.TEST_RUN_ID || 'no-test-run-id';
 
 export const options = {
     scenarios: {
@@ -46,6 +47,10 @@ export function accountInfoTest() {
 
     let params = {
         timeout: '60s',
+        headers: {
+            'perfana-test-run-id': `${testRunId}`,
+            'perfana-request-name': 'accountInfo'
+        },
         tags: {
             name: 'accountInfo',
         }
@@ -66,6 +71,10 @@ export function transactionTest() {
 
     let params = {
         timeout: '60s',
+        headers: {
+            'perfana-test-run-id': `${testRunId}`,
+            'perfana-request-name': 'transactions'
+        },
         tags: {
             name: 'transactions',
         }
@@ -87,6 +96,10 @@ export function healthCheck() {
     while (true) {
         let params = {
             timeout: (everyXSeconds - 1) + 's',
+            headers: {
+                'perfana-test-run-id': `${testRunId}`,
+                'perfana-request-name': 'healthCheck'
+            },
             tags: {
                 name: 'healthCheck',
             }

@@ -20,7 +20,12 @@ echo "Creating database 'jfr'..."
 curl -s -XPOST "${INFLUX_HOST}/query" \
   --data-urlencode "q=CREATE DATABASE jfr"
 
-echo "Database 'jfr' created successfully."
+echo "Database 'jfr' created."
+
+echo "Creating database 'gatling'..."
+curl -s -XPOST "${INFLUX_HOST}/query" \
+  --data-urlencode "q=CREATE DATABASE gatling"
+echo "Database 'gatling' created."
 
 DB_NAME="k6"  # Database name
 

@@ -6,8 +6,26 @@ receivers:
       grpc:
         endpoint: 0.0.0.0:4317
       http:
+        include_metadata: true
         endpoint: 0.0.0.0:4318
 processors:
+  attributes:
+    actions:
+      - key: "system_under_test"
+        action: insert
+        from_context: metadata.system_under_test
+        #value: "tiny-bank"
+        #from_attribute: system_under_test
+      - key: "test_environment"
+        action: insert
+        from_context: metadata.test_environment
+        #value: "silver"
+        #from_attribute: "test_environment"
+      - key: "service"
+        action: insert
+        from_context: metadata.service
+        #value: "tiny-bank-service"
+        #from_attribute: service
   batch:
 extensions:
   zpages: {}
@@ -26,13 +44,13 @@ service:
   pipelines:
     metrics:
       receivers: [otlp]
-      processors: []
-      exporters: [debug, prometheusremotewrite]
-    logs:
-      receivers: [otlp]
-      processors: []
-      exporters: [debug]
-    traces:
-      receivers: [otlp, zipkin]
-      processors: []
-      exporters: [debug]
+      processors: [attributes]
+      exporters: [prometheusremotewrite]
+#    logs:
+#      receivers: [otlp]
+#      processors: []
+#      exporters: [debug]
+#    traces:
+#      receivers: [otlp, zipkin]
+#      processors: []
+#      exporters: [debug]
