@@ -55,7 +55,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -142,12 +142,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "histogram_quantile(0.95, rate(http_server_request_duration_seconds_bucket{job=\"$job\", http_response_status_code=\"200\"}[$__rate_interval]))",
+          "expr": "histogram_quantile(0.95, rate(http_server_request_duration_seconds_bucket{http_response_status_code=\"200\", system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval]))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -165,7 +165,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -252,12 +252,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "rate(http_server_request_duration_seconds_count{http_response_status_code=\"200\", job=\"$job\"}[$__rate_interval])",
+          "expr": "rate(http_server_request_duration_seconds_count{http_response_status_code=\"200\", system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -275,7 +275,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -362,12 +362,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "histogram_quantile(0.95, rate(http_server_request_duration_seconds_bucket{job=\"$job\", http_response_status_code!=\"200\"}[$__rate_interval]))",
+          "expr": "histogram_quantile(0.95, rate(http_server_request_duration_seconds_bucket{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\", http_response_status_code!=\"200\"}[$__rate_interval]))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -385,7 +385,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -472,12 +472,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "rate(http_server_request_duration_seconds_count{job=\"$job\", http_response_status_code!=\"200\"}[$__rate_interval])",
+          "expr": "rate(http_server_request_duration_seconds_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\", http_response_status_code!=\"200\"}[$__rate_interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -495,7 +495,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -543,8 +543,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -582,12 +581,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "histogram_quantile(0.95, rate(http_client_request_duration_seconds_bucket{job=\"$job\"}[$__rate_interval]))",
+          "expr": "histogram_quantile(0.95, rate(http_client_request_duration_seconds_bucket{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval]))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -605,7 +604,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -653,8 +652,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -692,12 +690,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "rate(http_client_request_duration_seconds_count{job=\"$job\"}[$__rate_interval])",
+          "expr": "rate(http_client_request_duration_seconds_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -715,7 +713,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -763,8 +761,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -802,12 +799,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "histogram_quantile(0.95, rate(db_client_connections_use_time_milliseconds_bucket{job=\"$job\"}[$__rate_interval]))",
+          "expr": "histogram_quantile(0.95, rate(db_client_connections_use_time_milliseconds_bucket{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval]))",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -825,7 +822,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -873,8 +870,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -912,12 +908,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "rate(db_client_connections_use_time_milliseconds_count{job=\"$job\"}[$__rate_interval])",
+          "expr": "rate(db_client_connections_use_time_milliseconds_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -935,7 +931,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -983,8 +979,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1022,12 +1017,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "db_client_connections_pending_requests{job=\"$job\"}",
+          "expr": "db_client_connections_pending_requests{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -1045,7 +1040,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -1093,8 +1088,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1132,12 +1126,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "db_client_connections_usage{job=\"$job\"}",
+          "expr": "db_client_connections_usage{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -1155,7 +1149,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -1203,8 +1197,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1244,12 +1237,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "jvm_memory_used_bytes{job=\"$job\"}",
+          "expr": "jvm_memory_used_bytes{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -1267,7 +1260,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -1315,8 +1308,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1354,12 +1346,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "rate(jvm_cpu_time_seconds_total{job=\"$job\"}[$__rate_interval])",
+          "expr": "rate(jvm_cpu_time_seconds_total{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}[$__rate_interval])",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -1377,7 +1369,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_MIMIR}"
+        "uid": "mimir"
       },
       "fieldConfig": {
         "defaults": {
@@ -1425,8 +1417,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1464,12 +1455,12 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_MIMIR}"
+            "uid": "mimir"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
           "exemplar": false,
-          "expr": "jvm_thread_count{job=\"$job\"}",
+          "expr": "jvm_thread_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", job=\"$service\"}",
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
@@ -1487,22 +1478,61 @@
   ],
   "refresh": "10s",
   "schemaVersion": 40,
-  "tags": [],
+  "tags": [
+    "otel",
+    "perfana"
+  ],
   "templating": {
     "list": [
       {
         "current": {},
         "datasource": {
           "type": "prometheus",
-          "uid": "${DS_MIMIR}"
+          "uid": "mimir"
         },
-        "definition": "label_values(job)",
-        "label": "job",
-        "name": "job",
+        "definition": "label_values(jvm_cpu_count,system_under_test)",
+        "name": "system_under_test",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(job)",
+          "query": "label_values(jvm_cpu_count,system_under_test)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "mimir"
+        },
+        "definition": "label_values(jvm_cpu_count{system_under_test=\"$system_under_test\"},test_environment)",
+        "name": "test_environment",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(jvm_cpu_count{system_under_test=\"$system_under_test\"},test_environment)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "type": "query"
+      },
+      {
+        "current": {},
+        "datasource": {
+          "type": "prometheus",
+          "uid": "mimir"
+        },
+        "definition": "label_values(jvm_cpu_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\"},job)",
+        "description": "",
+        "name": "service",
+        "options": [],
+        "query": {
+          "qryType": 1,
+          "query": "label_values(jvm_cpu_count{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\"},job)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -1519,6 +1549,6 @@
   "timezone": "browser",
   "title": "Java Otel Dashboard",
   "uid": "java-otel-dashboard-v1",
-  "version": 2,
+  "version": 4,
   "weekStart": ""
 }
