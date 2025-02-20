@@ -12,38 +12,41 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations \\u0026 Alerts",
         "target": {
-          "limit": 100,
+          "limit": 500,
           "matchAny": false,
-          "tags": [],
-          "type": "dashboard"
+          "tags": [
+            "resilience"
+          ],
+          "type": "tags"
         },
         "type": "dashboard"
       }
     ]
   },
-  "description": "",
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
+  "id": 8,
   "links": [],
-  "liveNow": false,
   "panels": [
     {
       "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+        "type": "prometheus",
+        "uid": "mimir"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 10,
             "gradientMode": "none",
@@ -52,6 +55,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -97,7 +101,6 @@
         "y": 0
       },
       "id": 106,
-      "links": [],
       "options": {
         "legend": {
           "calcs": [
@@ -115,13 +118,13 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "9.5.9",
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+            "type": "prometheus",
+            "uid": "mimir"
+          },
           "editorMode": "code",
           "expr": "avg(httpcomponents_httpclient_pool_total_connections{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", service=\"$service\", state=\"leased\"}) by(httpclient) / avg(clamp_min(httpcomponents_httpclient_pool_total_max{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", service=\"$service\"}, 1)) by(httpclient) ",
           "format": "time_series",
@@ -139,20 +142,22 @@
     },
     {
       "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+        "type": "prometheus",
+        "uid": "mimir"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -161,6 +166,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -218,12 +224,13 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+            "type": "prometheus",
+            "uid": "mimir"
+          },
           "editorMode": "builder",
           "expr": "avg by(httpclient) (httpcomponents_httpclient_pool_route_max_default{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", service=\"$service\"})",
           "instant": true,
@@ -238,20 +245,22 @@
     },
     {
       "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+        "type": "prometheus",
+        "uid": "mimir"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -260,6 +269,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -317,12 +327,13 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+            "type": "prometheus",
+            "uid": "mimir"
+          },
           "editorMode": "builder",
           "expr": "avg by(httpclient) (httpcomponents_httpclient_pool_total_pending{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", service=\"$service\"})",
           "instant": true,
@@ -337,20 +348,22 @@
     },
     {
       "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+        "type": "prometheus",
+        "uid": "mimir"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
+            "barWidthFactor": 0.6,
             "drawStyle": "line",
             "fillOpacity": 20,
             "gradientMode": "none",
@@ -359,6 +372,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -416,12 +430,13 @@
           "sort": "none"
         }
       },
+      "pluginVersion": "11.4.0",
       "targets": [
         {
           "datasource": {
-          "type": "prometheus",
-          "uid": "mimir"
-        },
+            "type": "prometheus",
+            "uid": "mimir"
+          },
           "editorMode": "builder",
           "expr": "avg by(httpclient) (httpcomponents_httpclient_pool_total_max{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\", service=\"$service\"})",
           "instant": true,
@@ -435,9 +450,9 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "",
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 40,
   "tags": [
     "http connection pool",
     "perfana",
@@ -446,17 +461,16 @@
   "templating": {
     "list": [
       {
-        "allFormat": "glob",
+        "current": {
+          "text": "",
+          "value": ""
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
         },
         "definition": "label_values(httpcomponents_httpclient_pool_total_connections, system_under_test)",
-        "hide": 0,
         "includeAll": false,
-        "label": "",
-        "multi": false,
-        "multiFormat": "glob",
         "name": "system_under_test",
         "options": [],
         "query": {
@@ -465,26 +479,19 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-        "allFormat": "glob",
-
+        "current": {
+          "text": "",
+          "value": ""
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
         },
         "definition": "label_values(httpcomponents_httpclient_pool_total_connections{system_under_test=\"$system_under_test\"}, test_environment)",
-        "hide": 0,
         "includeAll": false,
-        "label": "",
-        "multi": false,
-        "multiFormat": "glob",
         "name": "test_environment",
         "options": [],
         "query": {
@@ -493,24 +500,19 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       },
       {
-
+        "current": {
+          "text": "",
+          "value": ""
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
         },
         "definition": "label_values(httpcomponents_httpclient_pool_total_connections{system_under_test=\"$system_under_test\", test_environment=\"$test_environment\"},service)",
-        "hide": 0,
         "includeAll": false,
-        "label": "",
-        "multi": false,
         "name": "service",
         "options": [],
         "query": {
@@ -519,12 +521,7 @@
         },
         "refresh": 2,
         "regex": "",
-        "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "type": "query"
       }
     ]
   },
@@ -533,7 +530,6 @@
     "to": "now"
   },
   "timepicker": {
-    "now": true,
     "refresh_intervals": [
       "10s",
       "30s",
@@ -544,22 +540,11 @@
       "1h",
       "2h",
       "1d"
-    ],
-    "time_options": [
-      "5m",
-      "15m",
-      "1h",
-      "6h",
-      "12h",
-      "24h",
-      "2d",
-      "7d",
-      "30d"
     ]
   },
   "timezone": "browser",
   "title": "HTTP connection pool",
   "uid": "spring-boot-kubernetes-httpconpool-mimir",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

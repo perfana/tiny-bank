@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_MIMIR",
-      "label": "Mimir",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.4.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -42,6 +11,14 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 500,
+          "matchAny": false,
+          "tags": [
+            "resilience"
+          ],
+          "type": "tags"
+        },
         "type": "dashboard"
       }
     ]
@@ -49,7 +26,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 6,
   "links": [],
   "panels": [
     {
@@ -543,7 +520,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -652,7 +630,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -761,7 +740,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -870,7 +850,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1476,16 +1457,21 @@
       "type": "timeseries"
     }
   ],
+  "preload": false,
   "refresh": "10s",
   "schemaVersion": 40,
   "tags": [
     "otel",
-    "perfana"
+    "perfana",
+    "perfana-template"
   ],
   "templating": {
     "list": [
       {
-        "current": {},
+        "current": {
+          "text": "tiny-bank",
+          "value": "tiny-bank"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
@@ -1503,7 +1489,10 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "text": "silver",
+          "value": "silver"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
@@ -1521,7 +1510,10 @@
         "type": "query"
       },
       {
-        "current": {},
+        "current": {
+          "text": "tiny-bank-service",
+          "value": "tiny-bank-service"
+        },
         "datasource": {
           "type": "prometheus",
           "uid": "mimir"
@@ -1542,13 +1534,13 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Java Otel Dashboard",
   "uid": "java-otel-dashboard-v1",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }
