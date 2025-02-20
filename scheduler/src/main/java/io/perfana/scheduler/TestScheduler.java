@@ -145,9 +145,9 @@ public class TestScheduler {
         {
             CommandRunnerEventConfig commandConfig = new CommandRunnerEventConfig();
             commandConfig.setName("toxiproxy");
-            commandConfig.setOnStartTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic add -n myLatency -t latency -a latency=0 test-postgres");
-            commandConfig.setOnScheduledEvent("docker exec toxiproxy /go/bin/toxiproxy-cli toxic update -n myLatency -a latency=__latency_ms__ test-postgres");
-            commandConfig.setOnAfterTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic remove -n myLatency test-postgres");
+            commandConfig.setOnStartTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic add -n myLatency -t latency -a latency=0 test-postgres; curl -H \"Content-Type: application/json\" -X POST -d '{\"tags\":[\"resilience\"],\"text\":\"test start\"}' http://admin:admin@localhost:3000/api/annotations");
+            commandConfig.setOnScheduledEvent("docker exec toxiproxy /go/bin/toxiproxy-cli toxic update -n myLatency -a latency=__latency_ms__ test-postgres; curl -H \"Content-Type: application/json\" -X POST -d '{\"tags\":[\"resilience\", \"database\",\"delay\"],\"text\":\"database delay set to __latency_ms__ milliseconds\"}' http://admin:admin@localhost:3000/api/annotations");
+            commandConfig.setOnAfterTest("docker exec toxiproxy /go/bin/toxiproxy-cli toxic remove -n myLatency test-postgres; curl -H \"Content-Type: application/json\" -X POST -d '{\"tags\":[\"resilience\"],\"text\":\"test end\"}' http://admin:admin@localhost:3000/api/annotations");
             eventConfigs.add(commandConfig);
         }
 

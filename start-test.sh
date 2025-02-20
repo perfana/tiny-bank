@@ -17,7 +17,7 @@ if [ -z "$PERFANA_API_KEY" ]; then
   echo "Environment variable PERFANA_API_KEY is not set. Skipping Perfana events."
 fi
 
-if [ -z "$PERFANA_URL" ] && [ "$PERFANA_API_KEY" != "" ]; then
+if [ -z "$PERFANA_URL" ] && [ -z "$PERFANA_API_KEY" ]; then
   echo "Environment variable PERFANA_URL is not set. Using default."
 else
   echo "PERFANA_API_KEY is set, using Perfana URL: $PERFANA_URL"
