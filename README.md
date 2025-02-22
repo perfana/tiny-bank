@@ -31,8 +31,6 @@ export IS_SLOW_DB_TEST=true
 
 If you want to change the setting to default do unset on the env variable, like so: `unset IS_SLOW_DB_TEST`.
 
-```shell
-
 The Tiny Bank application is now running and can be accessed at `http://localhost:13000`.
 
 ![initial-screen.png](images/initial-screen.png "Initial Screen")
