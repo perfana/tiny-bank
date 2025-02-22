@@ -33,8 +33,11 @@ export const options = {
             exec: 'transactionTest',
         },
         health_check: {
-            executor: 'constant-vus',
-            vus: 1,
+            executor: 'constant-arrival-rate',
+            rate: 1,
+            timeUnit: '1s',
+            preAllocatedVUs: 1,
+            maxVUs: 10,
             duration: duration,
             exec: 'healthCheck',
         },
@@ -90,27 +93,18 @@ export function transactionTest() {
 }
 
 export function healthCheck() {
-    // Health check logic runs every X seconds
-    let everyXSeconds = 5;
-
-    while (true) {
-        let params = {
-            timeout: (everyXSeconds - 1) + 's',
-            headers: {
-                'perfana-test-run-id': `${testRunId}`,
-                'perfana-request-name': 'healthCheck'
-            },
-            tags: {
-                name: 'healthCheck',
-            }
+    let params = {
+        timeout: '5s',
+        headers: {
+            'perfana-test-run-id': `${testRunId}`,
+            'perfana-request-name': 'healthCheck'
+        },
+        tags: {
+            name: 'healthCheck',
         }
-        const healthCheckRes = http.get(`http://localhost:${port}/actuator/health`, params);
-        check(healthCheckRes, {
-            'health check status is 200': (r) => r.status === 200,
-        });
-        //console.log('Health check response: ' + healthCheckRes.body);
-
-        // Sleep for X seconds to run this check periodically
-        sleep(everyXSeconds);
     }
+    const healthCheckRes = http.get(`http://localhost:${port}/actuator/health`, params);
+    check(healthCheckRes, {
+        'health check status is 200': (r) => r.status === 200,
+    });
 }
