@@ -26,7 +26,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 6,
+  "id": 1,
   "links": [],
   "panels": [
     {
@@ -128,7 +128,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{http_route}} {{http_response_status_code}}",
           "range": true,
@@ -238,7 +238,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{http_route}} {{http_response_status_code}}",
           "range": true,
@@ -348,7 +348,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{http_route}} {{http_response_status_code}}",
           "range": true,
@@ -458,7 +458,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{http_route}} {{http_response_status_code}}",
           "range": true,
@@ -568,7 +568,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{server_address}} {{server_port}} {{error_type}}",
           "range": true,
@@ -678,7 +678,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{server_address}} {{server_port}} {{error_type}}",
           "range": true,
@@ -740,8 +740,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -788,7 +787,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{pool_name}}",
           "range": true,
@@ -850,8 +849,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -898,7 +896,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{pool_name}}",
           "range": true,
@@ -1007,7 +1005,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{pool_name}}",
           "range": true,
@@ -1116,7 +1114,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{pool_name}} {{state}}",
           "range": true,
@@ -1227,7 +1225,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{jvm_memory_type}} {{jvm_memory_pool_name}}",
           "range": true,
@@ -1336,7 +1334,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{instance}}",
           "range": true,
@@ -1445,7 +1443,7 @@
           "format": "time_series",
           "fullMetaSearch": false,
           "includeNullMetadata": true,
-          "instant": true,
+          "instant": false,
           "interval": "5s",
           "legendFormat": "{{jvm_thread_state}} deamon: {{jvm_thread_daemon}}",
           "range": true,
@@ -1541,6 +1539,6 @@
   "timezone": "browser",
   "title": "Java Otel Dashboard",
   "uid": "java-otel-dashboard-v1",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
