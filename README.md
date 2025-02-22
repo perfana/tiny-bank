@@ -5,37 +5,33 @@ This is a simple bank application that is used to demonstrate resilience and per
 ## Explore Tiny Bank
 
 To run the Tiny Bank application, execute the `start-test-components.sh` script in the root directory 
-of this project.
+of this project. The `start-test-components.sh` script has two options: `--otel-agent` and `--jfr-agent`.
+These will enable the agents in the Tiny Bank Service JVM application.
 
-The script will start the following components:
+To run a load test, simply start via the `start-test.sh` script. After running the test all components are stopped.
 
-1. Start the database and WireMock services:
-    ```shell
-    cd db
-    docker compose up -d
-    ```
-2. Compile the Tiny Bank Spring Boot app from the `service` directory:
-    ```shell
-    cd service
-    ../mvnw package
-    ```
-3. Start the wiremock services from the `service` directory:
-    ```shell
-   ./create-wiremock-jars.sh
-   java -jar service/target/tiny-bank-service-0.0.1-account-stub-SNAPSHOT.jar &
-   java -jar service/target/tiny-bank-service-0.0.1-balance-stub-SNAPSHOT.jar &
-    ```
-4. Start the Tiny Bank Spring Boot service from the `service` directory:
-    ```shell
-    cd service
-    ../mvnw spring-boot:run
-    ```
-5. Start the Tiny Bank frontend from the `app` directory:
-    ```shell
-   cd app/tiny-fe
-   npm install
-   node app.js
-    ```
+When you start the test, you will see the options you can choose from. There are two types of resiliencs tests:
+one with wiremock to delay the remote stubs (to fetch account info and the balance), and the other with Toxiproxy to 
+delay the database.
+
+To run with both the OTEL agent and the JFR agent, use the following command:
+
+```shell
+export ENABLE_JFR_AGENT=true
+export ENABLE_OTEL_AGENT=true
+./start-test.sh
+```
+
+To run a resilience test with ToxiProxy to slow down the database, use the following command:
+
+```shell
+export IS_SLOW_DB_TEST=true
+./start-test.sh
+```
+
+If you want to change the setting to default do unset on the env variable, like so: `unset IS_SLOW_DB_TEST`.
+
+```shell
 
 The Tiny Bank application is now running and can be accessed at `http://localhost:13000`.
 
@@ -142,6 +138,39 @@ The following steps are needed to run the resilience test:
 You can check the results in Grafana by logging in with `admin`/`admin` at `http://localhost:3000`. 
 Select the k6 dashboard to see the k6 metrics and the JFR dashboard to see the JFR metrics.
 
+## Steps of run-test-components.sh
+
+The `run-test-components.sh` script starts the following components. eThis is a refenerence to
+get insight of what is happening, you do not have to run this commands yourself.
+
+1. Start the database and WireMock services:
+    ```shell
+    cd db
+    docker compose up -d
+    ```
+2. Compile the Tiny Bank Spring Boot app from the `service` directory:
+    ```shell
+    cd service
+    ../mvnw package
+    ```
+3. Start the wiremock services from the `service` directory:
+    ```shell
+   ./create-wiremock-jars.sh
+   java -jar service/target/tiny-bank-service-0.0.1-account-stub-SNAPSHOT.jar &
+   java -jar service/target/tiny-bank-service-0.0.1-balance-stub-SNAPSHOT.jar &
+    ```
+4. Start the Tiny Bank Spring Boot service from the `service` directory:
+    ```shell
+    cd service
+    ../mvnw spring-boot:run
+    ```
+5. Start the Tiny Bank frontend from the `app` directory:
+    ```shell
+   cd app/tiny-fe
+   npm install
+   node app.js
+    ```
+   
 ## Troubleshooting
 
 If database issues occur, you can reset the database by running the following command from the root directory:
@@ -153,6 +182,15 @@ Beware that `--volumes` will remove the volumes, so data will be lost. The Tiny 
 when restarting the Spring Boot application.
 
 Stop all components by running the `stop-test.sh` script in the root directory of this project.
+
+If you want a fresh metrics or observability setup, for instance after pulling the latest dashboards,
+clean out all volumes of the metrics components. Beware that you will loose all previous data of test runs.
+```shell
+cd metrics
+docker compose down --volumes
+```
+
+Running the `start-test.sh` or `start-test-components.sh` script will start recreate and initialize the metrics components.
 
 ## Credits
 
